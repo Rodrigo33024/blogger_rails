@@ -1,11 +1,12 @@
 class ArticlesController < ApplicationController
-
   def index
     @articles = Article.all
   end
 
   def show
     @article = Article.find(params[:id])
+    @comment = Comment.new
+    @comment.article_id = @article.id
   end
 
   def new
@@ -34,13 +35,13 @@ class ArticlesController < ApplicationController
 
   def destroy
     article = Article.find(params[:id]).destroy
-    flash.notice = "Article '#{article.title}' Deleted!"
-    redirect_to "index"
+    flash.notice = 'Article Deleted!'
+    redirect_to 'index'
   end
 
   private
+
   def article_params
     params.require(:article).permit(:title, :body)
   end
-
 end
